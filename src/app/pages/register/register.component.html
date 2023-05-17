@@ -1,0 +1,112 @@
+<div class="container">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-5 align-self-center" style="display: flex;">
+        <form [formGroup]="formulario" (ngSubmit)="save()" class="border p-3 form" #resultForm="ngForm">
+          <div class="imagenUsuario" style="text-align: center;">
+            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+          </div>
+          <div style="width: 100%;text-align: center;">
+            <span style="font-size: 25px;">
+              Registro
+            </span>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="name" style="font-weight: bold;">Nombre:</label>
+            <input [(ngModel)]="user.name" type="text" name="name" id="name" class="form-control"
+              formControlName="name">
+            <small class="text-danger"
+              *ngIf="formulario.get('name')?.errors?.['required'] && formulario.get('name')?.touched">Complete
+              este
+              campo</small>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="name" style="font-weight: bold;">Apellido:</label>
+            <input [(ngModel)]="user.lastname" type="text" name="lastname" id="lastname" class="form-control"
+              formControlName="lastname">
+            <small class="text-danger"
+              *ngIf="formulario.get('lastname')?.errors?.['required'] && formulario.get('lastname')?.touched">Complete
+              este
+              campo</small>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="correo" style="font-weight: bold;">Correo:</label>
+            <input [(ngModel)]="user.email" type="email" name="correo" id="correo" class="form-control"
+              formControlName="correo">
+            <small class="text-danger"
+              *ngIf="formulario.get('correo')?.errors?.['required'] && formulario.get('correo')?.touched">Complete este
+              campo</small>
+            <small class="text-danger"
+              *ngIf="formulario.get('correo')?.errors?.['email'] && formulario.get('correo')?.touched">Ingrese un correo
+              valido</small>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="password" style="font-weight: bold;">Password:</label>
+            <input [(ngModel)]="user.password" type="text" name="password" id="password" class="form-control"
+              (ngModelChange)="validarContrasena()" [ngModelOptions]="{ standalone: true }">
+            <div *ngIf="contrasenaInvalida" class="error-message">La contraseña debe incluir mayúsculas, minúsculas, números y un carácter especial
+              @,&,_.</div>
+            <small class="text-danger"
+              *ngIf="formulario.get('password')?.errors?.['required'] && formulario.get('password')?.touched">Complete
+              este
+              campo</small>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="studyarea" style="font-weight: bold;">Área de Estudio:</label>
+            <select class="form-select" formControlName="studyarea" [(ngModel)]="user.studyarea">
+              <option [value]="areaEstudio" *ngFor="let areaEstudio of comboStudyArea"
+                [selected]="areaEstudio === user.studyarea">
+                {{areaEstudio}}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="specialty" style="font-weight: bold;">Especialidad:</label>
+            <input [(ngModel)]="user.specialty" type="text" name="specialty" id="specialty" class="form-control"
+              formControlName="specialty">
+            <small class="text-danger"
+              *ngIf="formulario.get('lastname')?.errors?.['required'] && formulario.get('lastname')?.touched">Complete
+              este
+              campo</small>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="type" style="font-weight: bold;">Tipo de Usuario:</label>
+            <select class="form-select" formControlName="type" [(ngModel)]="user.type" (change)="onChange()">
+              <option [value]="type" *ngFor="let type of comboTypeUser" [selected]="type === user.type">
+                {{type}}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="nivel" style="font-weight: bold;">Nivel:</label>
+            <select class="form-select" formControlName="nivel" [(ngModel)]="user.nivel">
+              <option [value]="nivel" *ngFor="let nivel of comboLevelUser" [selected]="nivel === user.nivel">
+                {{nivel}}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group mb-3">
+            <label for="name" style="font-weight: bold;">Motivo de Registro:</label>
+            <input [disabled]="true" [(ngModel)]="user.motiveRegister" type="text" name="motiveRegister"
+              id="motiveRegister" class="form-control" formControlName="motiveRegister">
+            <small class="text-danger"
+              *ngIf="formulario.get('motiveRegister')?.errors?.['required'] && formulario.get('motiveRegister')?.touched">Complete
+              este
+              campo</small>
+          </div>
+
+          <button [disabled]="resultForm.form.invalid || contrasenaInvalida" type="submit" class="btn btn-primary btn-sm form-control"
+            data-bs-toggle="modal" data-bs-target="#exampleModal">Registrar Usuario</button>
+
+        </form>
+      </div>
+    </div>
